@@ -36,6 +36,10 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.json$/,
+                loader: 'json-loader'
+            },
+            {
                 test: /\.tsx?$/,
                 use: isProduction
                     ? 'awesome-typescript-loader?module=es6'
