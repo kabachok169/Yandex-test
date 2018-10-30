@@ -6,7 +6,9 @@
   "scripts": {
     "build": "webpack --mode development",
     "tslint": "tslint ./src/**/*.tsx",
-    "start": "webpack-dev-server --mode development --inline"
+    "start": "webpack-dev-server --mode development --inline",
+    "task1": "node ./Task/Task1.js",
+    "task2": "node ./Task/Task2.js"
   },
   "repository": {
     "type": "git",
