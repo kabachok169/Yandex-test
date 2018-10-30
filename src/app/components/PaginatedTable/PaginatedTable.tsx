@@ -2,6 +2,8 @@ import * as React from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
+import './PaginatedTable.scss';
+
 import { Header, Button, Container, Table, Pagination, Grid, Checkbox, Input } from 'semantic-ui-react';
 
 
@@ -21,11 +23,9 @@ class PaginatedTable extends React.Component<IProps, any> {
     render() {
         const {onPaginate, flights, totalPages, headers, activePage} = this.props;
 
-        console.log('1: ', flights);
-
         return(
-            <div>
-                <Table celled>
+            <div className="table">
+                <Table singleLine columns={6} textAlign="center">
                     <Table.Header>
                         <Table.Row>
                             {headers.length && headers.map((item, key) => {

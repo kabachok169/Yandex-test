@@ -1,14 +1,33 @@
 body {
-    padding-top: 20px; 
+    padding-top: 20px;
     cursor: default;
+    user-select: none;
 }
+
+.background {
+    position: fixed;
+    left: 0;
+    top: 0;
+    background-image: url('../../../static/air.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: brightness(50%);
+    filter: blur(3px);
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    transform: scale(1.1);
+  }
 
 .header {
     height: 100px;
+    color: white;
+    font-size: 2em;
     &__info {
         margin-top: 40px;
         text-align: center;
     }
+
 }
 
 .table-cell {
@@ -18,5 +37,14 @@ body {
 .main {
     width: 90%;
     margin-left: 5%;
+    margin-top: 40px;
     min-width: 800px;
+    background-color: rgb(240, 240, 240);
+    padding: 30px;
+    border-radius: 8px;
+    opacity: 0.9;
+}
+
+.header-grid {
+    margin-bottom: 30px;
 }

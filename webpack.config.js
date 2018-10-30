@@ -3,7 +3,7 @@ const Path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const outPath = Path.join(__dirname, './dist');
 const sourcePath = Path.join(__dirname, './src');
@@ -78,12 +78,16 @@ module.exports = {
             }
         ]
     },
+    
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html'
         }),
         new ExtractTextPlugin({
             filename: 'style.css'
-        })
+        }),
+        new CopyWebpackPlugin([
+            {from: Path.join(__dirname, 'src/static'), to: Path.join(outPath, 'static')},
+        ])
     ]
 };

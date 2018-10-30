@@ -64,6 +64,7 @@
   },
   "dependencies": {
     "@types/react-router": "^4.0.32",
+    "copy-webpack-plugin": "^4.5.4",
     "react-dom": "^16.1.1",
     "react-redux": "^5.0.7",
     "react-router": "^4.2.0",

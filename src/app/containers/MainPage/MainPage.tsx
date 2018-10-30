@@ -51,19 +51,19 @@ public componentWillMount(): void {
     this.props.flightActions.setFlights(this.state);
 }
 
-public handlePaginationChange(event: any, object: any): void {
-    this.setState({activePage: object.activePage});
+public handlePaginationChange(event: any, object: any) {
+    this.setState({ activePage: Math.ceil(object.activePage) });
 }
 
 public handleCheck(event: any, checkbox: any): void {
     const newState: IState = {};
     newState[checkbox.value] = checkbox.checked;
-    this.setState(newState);
+    this.setState({...newState, activePage: 1});
     this.props.flightActions.setFlights({...this.state, ...newState});
 }
 
 public search(event: any, object: any): void {
-    this.setState({search: object.value});
+    this.setState({search: object.value, activePage: 1});
     this.props.flightActions.setFlights({...this.state, search: object.value});
 }
 
@@ -75,24 +75,24 @@ public render(): JSX.Element {
     return (
         <div>
             <div className="header">
-                <Header className="header__info" size="huge">Flights</Header>
+                <Header className="header__info" size='huge' color='black'>Расписание рейсов</Header>
             </div>
             <div className="main">
                 <div className="checkboxes">
                     <Grid>
-                        <Grid.Row columns={6}>
-                            <Grid.Column key={1}>
+                        <Grid.Row columns={5}>
+                            <Grid.Column floated='left'>
                                 <Checkbox toggle defaultChecked value='arrival' onChange={this.handleCheck} label={{ children: 'Прилет' }}/>
                             </Grid.Column>
-                            <Grid.Column key={3}>
-                                <Checkbox toggle defaultChecked value='departure' onChange={this.handleCheck} label={{ children: 'Отлет' }}/>
+                            <Grid.Column floated='left'>
+                                <Checkbox toggle defaultChecked value='departure' onChange={this.handleCheck} label={{ children: 'Вылет' }}/>
                             </Grid.Column>
-                            <Grid.Column key={5}>
+                            <Grid.Column floated='left'>
                                 <Checkbox toggle value='delay' onChange={this.handleCheck} label={{ children: 'Только задержанные рейсы' }}/>
                             </Grid.Column>
-                        </Grid.Row>
-                        <Grid.Row columns={5}>
-                            <Grid.Column key={1}><Input fluid onChange={this.search} icon="search" placeholder="Search..."/></Grid.Column>
+                            <Grid.Column floated='right' width={4}>
+                                <Input fluid onChange={this.search} icon="search" placeholder="Поиск по номеру рейса"/>
+                            </Grid.Column>
                         </Grid.Row>
                     </Grid>
                 </div>
