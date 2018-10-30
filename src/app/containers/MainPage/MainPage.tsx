@@ -8,8 +8,6 @@ import {Redirect} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import {data} from './data';
-
 import * as flightActions from '../../actions/flightActions';
 import flights from '../../reducers/flightReducer';
 
@@ -29,11 +27,11 @@ constructor(props: any) {
         currentPage: 1,
         arrivalCheck: true,
         departureCheck: true,
-        delayCheck: false
+        delayCheck: false,
+        search: ''
     };
 
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
-    this.handleCheckData = this.handleCheckData.bind(this);
     this.handleDelayCheck = this.handleDelayCheck.bind(this);
     this.handleArrivalCheck = this.handleArrivalCheck.bind(this);
     this.handleDepartureCheck = this.handleDepartureCheck.bind(this);
@@ -41,7 +39,7 @@ constructor(props: any) {
 }
 
 public componentWillMount() {
-    this.handleCheckData(this.state);
+    this.props.flightActions.setFlights(this.state);
 }
 
 public handlePaginationChange(e: any, o: any) {
@@ -49,51 +47,51 @@ public handlePaginationChange(e: any, o: any) {
     this.setState({currentPage: page});
 }
 
-public handleCheckData(filters, input = this.state.input): void {
+// public handleCheckData(filters, input = this.state.input): void {
 
-    const checkedInput = data.flights.filter((item) => {
-        if (!input) {
-            return true;
-        }
-        return item.number.includes(input);
-    });
+//     const checkedInput = data.flights.filter((item) => {
+//         if (!input) {
+//             return true;
+//         }
+//         return item.number.includes(input);
+//     });
 
-    const newData = checkedInput.filter((item) => {
-        if (!filters.arrivalCheck && !filters.departureCheck) {
-            return false;
-        }
-        if (!filters.delayCheck) {
-            return item.status === filters.arrivalCheck || item.status === !filters.departureCheck;
-        }
-        return item.delay && (item.status === filters.arrivalCheck || item.status === !filters.departureCheck);
-    });
+//     const newData = checkedInput.filter((item) => {
+//         if (!filters.arrivalCheck && !filters.departureCheck) {
+//             return false;
+//         }
+//         if (!filters.delayCheck) {
+//             return item.status === filters.arrivalCheck || item.status === !filters.departureCheck;
+//         }
+//         return item.delay && (item.status === filters.arrivalCheck || item.status === !filters.departureCheck);
+//     });
 
-    this.setState({flights: newData});
-}
+//     this.setState({flights: newData});
+// }
 
 public handleArrivalCheck(e, o): void {
     this.setState({arrivalCheck: o.checked});
-    this.handleCheckData({...this.state, arrivalCheck: o.checked});
+    this.props.flightActions.setFlights({...this.state, arrivalCheck: o.checked});
 }
 
 public handleDepartureCheck(e, o): void {
     this.setState({departureCheck: o.checked});
-    this.handleCheckData({...this.state, departureCheck: o.checked});
+    this.props.flightActions.setFlights({...this.state, departureCheck: o.checked});
 }
 
 public handleDelayCheck(e, o): void {
-    console.log(o);
     this.setState({delayCheck: o.checked});
-    this.handleCheckData({...this.state, delayCheck: o.checked});
+    this.props.flightActions.setFlights({...this.state, delayCheck: o.checked});
 }
 
 public search(event, object): void {
-    this.setState({input: object.value});
-    this.handleCheckData(this.state, object.value);
+    this.setState({search: object.value});
+    this.props.flightActions.setFlights({...this.state, search: object.value});
 }
 
 public render(): JSX.Element {
-    console.log('state: ', this.state);
+    const {flights} = this.props;
+    console.log(flights);
 
     return (
         <div>
@@ -120,7 +118,7 @@ public render(): JSX.Element {
                     </Grid>
                 </div>
             
-                <Table celled>
+                <Table singleLine columns={6} textAlign="center" selectable>
                     <Table.Header>
                         <Table.Row>
                             <Table.HeaderCell>Время вылета</Table.HeaderCell>
@@ -133,8 +131,7 @@ public render(): JSX.Element {
                     </Table.Header>
 
                     <Table.Body>
-                        {this.state.flights.length ? this.state.flights.map((item, key) => {
-                            console.log(key, this.state.currentPage);
+                        {flights.flights.length ? flights.flights.map((item, key) => {
                             if (key >= this.state.currentPage - 1 && key < this.state.currentPage + this.state.totalPages) {
                                 return(
                                     <Table.Row negative={item.delay} positive={!item.delay}>
@@ -153,7 +150,7 @@ public render(): JSX.Element {
                 <Pagination 
                     boundaryRange={0} 
                     defaultActivePage={1} 
-                    totalPages={this.state.flights.length / this.state.totalPages} 
+                    totalPages={flights.flights.length / this.state.totalPages} 
                     onPageChange={this.handlePaginationChange} 
                 />
             </div>
@@ -169,7 +166,6 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-
     return {
         flightActions: bindActionCreators(flightActions, dispatch),
     };

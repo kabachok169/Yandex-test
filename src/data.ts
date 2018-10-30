@@ -1,6 +1,4 @@
-export const data = { 
-    "airport" : "SVO",
-    "flights" : [
+export const data = [
         {
             "number" : "1011",
             "destination" : "London",
@@ -92,5 +90,4 @@ export const data = {
             "status" : "waiting",
             "company" : "S7"
         }
-    ]
-};
+    ];

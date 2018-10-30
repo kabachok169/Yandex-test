@@ -1,11 +1,10 @@
 body {
     padding-top: 20px; 
+    cursor: default;
 }
 
 .header {
     height: 100px;
-    // margin-top: 100px;
-
     &__info {
         margin-top: 40px;
         text-align: center;
@@ -19,6 +18,5 @@ body {
 .main {
     width: 90%;
     margin-left: 5%;
-    // margin-top: 100px;
     min-width: 800px;
 }
