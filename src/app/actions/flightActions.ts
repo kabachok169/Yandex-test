@@ -10,7 +10,6 @@ import {data} from '../../data';
 
 export function setFlights(filters, flights = data): any {
     let checkedSearch = flights;
-    console.log('filters: ', filters);
 
     if (filters.search) {
         checkedSearch = flights.filter((item) => {
@@ -19,13 +18,13 @@ export function setFlights(filters, flights = data): any {
     }    
 
     const newData = checkedSearch.filter((item) => {
-        if (!filters.arrivalCheck && !filters.departureCheck) {
+        if (!filters.arrival && !filters.departure) {
             return false;
         }
-        if (!filters.delayCheck) {
-            return item.status === filters.arrivalCheck || item.status === !filters.departureCheck;
+        if (!filters.delay) {
+            return item.status === filters.arrival || item.status === !filters.departure;
         }
-        return item.delay && (item.status === filters.arrivalCheck || item.status === !filters.departureCheck);
+        return item.delay && (item.status === filters.arrival || item.status === !filters.departure);
     });
 
     console.log(newData);

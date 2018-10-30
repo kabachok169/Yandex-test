@@ -25,16 +25,14 @@ constructor(props: any) {
     this.state = {
         totalPages: 10,
         currentPage: 1,
-        arrivalCheck: true,
-        departureCheck: true,
-        delayCheck: false,
+        arrival: true,
+        departure: true,
+        delay: false,
         search: ''
     };
 
     this.handlePaginationChange = this.handlePaginationChange.bind(this);
-    this.handleDelayCheck = this.handleDelayCheck.bind(this);
-    this.handleArrivalCheck = this.handleArrivalCheck.bind(this);
-    this.handleDepartureCheck = this.handleDepartureCheck.bind(this);
+    this.handleCheck = this.handleCheck.bind(this);
     this.search = this.search.bind(this);
 }
 
@@ -47,41 +45,11 @@ public handlePaginationChange(e: any, o: any) {
     this.setState({currentPage: page});
 }
 
-// public handleCheckData(filters, input = this.state.input): void {
-
-//     const checkedInput = data.flights.filter((item) => {
-//         if (!input) {
-//             return true;
-//         }
-//         return item.number.includes(input);
-//     });
-
-//     const newData = checkedInput.filter((item) => {
-//         if (!filters.arrivalCheck && !filters.departureCheck) {
-//             return false;
-//         }
-//         if (!filters.delayCheck) {
-//             return item.status === filters.arrivalCheck || item.status === !filters.departureCheck;
-//         }
-//         return item.delay && (item.status === filters.arrivalCheck || item.status === !filters.departureCheck);
-//     });
-
-//     this.setState({flights: newData});
-// }
-
-public handleArrivalCheck(e, o): void {
-    this.setState({arrivalCheck: o.checked});
-    this.props.flightActions.setFlights({...this.state, arrivalCheck: o.checked});
-}
-
-public handleDepartureCheck(e, o): void {
-    this.setState({departureCheck: o.checked});
-    this.props.flightActions.setFlights({...this.state, departureCheck: o.checked});
-}
-
-public handleDelayCheck(e, o): void {
-    this.setState({delayCheck: o.checked});
-    this.props.flightActions.setFlights({...this.state, delayCheck: o.checked});
+public handleCheck(event, checkbox): void {
+    const newState = {};
+    newState[checkbox.value] = checkbox.checked;
+    this.setState(newState);
+    this.props.flightActions.setFlights({...this.state, ...newState});
 }
 
 public search(event, object): void {
@@ -103,13 +71,13 @@ public render(): JSX.Element {
                     <Grid>
                         <Grid.Row columns={6}>
                             <Grid.Column key={1}>
-                                <Checkbox toggle defaultChecked value='arrival' onChange={this.handleArrivalCheck} label={{ children: 'Прилет' }}/>
+                                <Checkbox toggle defaultChecked value='arrival' onChange={this.handleCheck} label={{ children: 'Прилет' }}/>
                             </Grid.Column>
                             <Grid.Column key={3}>
-                                <Checkbox toggle defaultChecked value='departure' onChange={this.handleDepartureCheck} label={{ children: 'Отлет' }}/>
+                                <Checkbox toggle defaultChecked value='departure' onChange={this.handleCheck} label={{ children: 'Отлет' }}/>
                             </Grid.Column>
                             <Grid.Column key={5}>
-                                <Checkbox toggle value='delay' onChange={this.handleDelayCheck} label={{ children: 'Только задержанные рейсы' }}/>
+                                <Checkbox toggle value='delay' onChange={this.handleCheck} label={{ children: 'Только задержанные рейсы' }}/>
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row columns={5}>
