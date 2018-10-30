@@ -3,6 +3,7 @@ import * as React from 'react';
 import './MainPage.scss';
 
 import { Header, Button, Container, Table, Pagination, Grid, Checkbox, Input } from 'semantic-ui-react';
+import PaginatedTable from '../../components/PaginatedTable/PaginatedTable';
 
 import {Redirect} from 'react-router';
 import {bindActionCreators} from 'redux';
@@ -12,19 +13,29 @@ import * as flightActions from '../../actions/flightActions';
 import flights from '../../reducers/flightReducer';
 
 
+
 interface IProps {
     flightActions? : any;
     flights? : any;
 }
 
-class MainPage extends React.Component<IProps, any> {
+export interface IState {
+    totalPages?: number,
+    activePage?: number,
+    arrival?: boolean,
+    departure?: boolean,
+    delay?: boolean,
+    search?: string
+}
 
-constructor(props: any) {
+class MainPage extends React.Component<IProps, IState> {
+
+constructor(props: IProps) {
     super(props);
 
     this.state = {
         totalPages: 10,
-        currentPage: 1,
+        activePage: 1,
         arrival: true,
         departure: true,
         delay: false,
@@ -36,30 +47,30 @@ constructor(props: any) {
     this.search = this.search.bind(this);
 }
 
-public componentWillMount() {
+public componentWillMount(): void {
     this.props.flightActions.setFlights(this.state);
 }
 
-public handlePaginationChange(e: any, o: any) {
-    const page: number = (o.activePage - 1) * this.state.totalPages + 1;
-    this.setState({currentPage: page});
+public handlePaginationChange(event: any, object: any): void {
+    this.setState({activePage: object.activePage});
 }
 
-public handleCheck(event, checkbox): void {
-    const newState = {};
+public handleCheck(event: any, checkbox: any): void {
+    const newState: IState = {};
     newState[checkbox.value] = checkbox.checked;
     this.setState(newState);
     this.props.flightActions.setFlights({...this.state, ...newState});
 }
 
-public search(event, object): void {
+public search(event: any, object: any): void {
     this.setState({search: object.value});
     this.props.flightActions.setFlights({...this.state, search: object.value});
 }
 
 public render(): JSX.Element {
-    const {flights} = this.props;
-    console.log(flights);
+    const {flights}: any = this.props;
+
+    const headers: Array<string> = ['Время вылета', 'Город', 'Номер рейса', 'Время прибытия', 'Статус', 'Задерживается'];
 
     return (
         <div>
@@ -86,54 +97,28 @@ public render(): JSX.Element {
                     </Grid>
                 </div>
             
-                <Table singleLine columns={6} textAlign="center" selectable>
-                    <Table.Header>
-                        <Table.Row>
-                            <Table.HeaderCell>Время вылета</Table.HeaderCell>
-                            <Table.HeaderCell>Город</Table.HeaderCell>
-                            <Table.HeaderCell>Номер рейса</Table.HeaderCell>
-                            <Table.HeaderCell>Время прибытия</Table.HeaderCell>
-                            <Table.HeaderCell>Статус</Table.HeaderCell>
-                            <Table.HeaderCell>Задерживается</Table.HeaderCell>
-                        </Table.Row>
-                    </Table.Header>
-
-                    <Table.Body>
-                        {flights.flights.length ? flights.flights.map((item, key) => {
-                            if (key >= this.state.currentPage - 1 && key < this.state.currentPage + this.state.totalPages) {
-                                return(
-                                    <Table.Row negative={item.delay} positive={!item.delay}>
-                                        <Table.Cell>{item.time}</Table.Cell>
-                                        <Table.Cell>{item.destination}</Table.Cell>
-                                        <Table.Cell>{item.number}</Table.Cell>
-                                        <Table.Cell>{item.arrival_time}</Table.Cell>
-                                        <Table.Cell>{item.status ? 'arrival' : 'departure'}</Table.Cell>
-                                        <Table.Cell>{item.delay ? 'Да' : 'Нет'}</Table.Cell>
-                                    </Table.Row>
-                                );
-                            }
-                        }) : ''}
-                    </Table.Body>
-                </Table>
-                <Pagination 
-                    boundaryRange={0} 
-                    defaultActivePage={1} 
-                    totalPages={flights.flights.length / this.state.totalPages} 
-                    onPageChange={this.handlePaginationChange} 
-                />
+                {flights.flights.length ?
+                    <PaginatedTable
+                        headers={headers}
+                        onPaginate={this.handlePaginationChange}
+                        totalPages={this.state.totalPages}
+                        activePage={this.state.activePage}
+                        flights={flights.flights}
+                    /> : ''
+                }
             </div>
         </div>
     );
 }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps: any = (state: any) => {
     return {
         flights: state.flights,
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps: any = (dispatch: any) => {
     return {
         flightActions: bindActionCreators(flightActions, dispatch),
     };

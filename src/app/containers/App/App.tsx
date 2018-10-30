@@ -12,11 +12,6 @@ const history = createBrowserHistory();
 
 class App extends React.Component<any, any> {
 
-    // public componentWillMount(): void {
-    //     const { getUser } = this.props.userActions;
-    //     getUser();
-    // }
-
     public render(): JSX.Element {
         return (
             <Router history={ history }>

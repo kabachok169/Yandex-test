@@ -1,15 +1,9 @@
 import {SET_FLIGHTS} from '../constants/ReducersConstants';
 import {data} from '../../data';
+import {IState} from '../containers/MainPage/MainPage';
 
-
-// export function getFlights(): any {
-//     return async (dispatch) => {
-//         // dispatch(setFlights({flights: [1, 2, 3]}))
-//     }
-// }
-
-export function setFlights(filters, flights = data): any {
-    let checkedSearch = flights;
+export function setFlights(filters: IState, flights: any = data): any {
+    let checkedSearch: Array<any> = flights;
 
     if (filters.search) {
         checkedSearch = flights.filter((item) => {
@@ -17,7 +11,7 @@ export function setFlights(filters, flights = data): any {
         });
     }    
 
-    const newData = checkedSearch.filter((item) => {
+    const newData: Array<any> = checkedSearch.filter((item) => {
         if (!filters.arrival && !filters.departure) {
             return false;
         }
@@ -26,9 +20,6 @@ export function setFlights(filters, flights = data): any {
         }
         return item.delay && (item.status === filters.arrival || item.status === !filters.departure);
     });
-
-    console.log(newData);
-
 
     return {
         type: SET_FLIGHTS,
