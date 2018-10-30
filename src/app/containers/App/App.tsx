@@ -1,17 +1,15 @@
 import * as React from 'react';
-import {connect, Provider} from 'react-redux';
 import {Router, Route, Switch} from 'react-router';
 import {createBrowserHistory} from 'history';
-import {bindActionCreators} from 'redux';
 import * as PathConstants from '../../constants/PathsConstants';
 
-// import '../../../static/css/main.scss';
-import MainPage from "../MainPage/MainPage";
+import MainPage from '../MainPage/MainPage';
+
+import '../../../static/main.scss';
 
 const history = createBrowserHistory();
 
-class App extends React.Component<any, any> {
-
+export default class App extends React.Component<any, any> {
     public render(): JSX.Element {
         return (
             <Router history={ history }>
@@ -22,15 +20,3 @@ class App extends React.Component<any, any> {
         );
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-    };
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);

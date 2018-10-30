@@ -27,7 +27,7 @@ module.exports = {
     watch: true,
     devServer: {
         contentBase: '/dist',
-        host: "localhost",
+        host: 'localhost',
         port: 8080,
         watchOptions: {
             poll: true
@@ -35,10 +35,6 @@ module.exports = {
     },
     module: {
         rules: [
-            {
-                test: /\.json$/,
-                loader: 'json-loader'
-            },
             {
                 test: /\.tsx?$/,
                 use: isProduction
@@ -78,7 +74,7 @@ module.exports = {
             }
         ]
     },
-    
+
     plugins: [
         new HtmlWebpackPlugin({
             template: 'index.html'

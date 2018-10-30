@@ -2,21 +2,19 @@ import * as React from 'react';
 
 import './MainPage.scss';
 
-import { Header, Button, Container, Table, Pagination, Grid, Checkbox, Input } from 'semantic-ui-react';
+import { Header, Grid, Checkbox, Input } from 'semantic-ui-react';
 import PaginatedTable from '../../components/PaginatedTable/PaginatedTable';
 
-import {Redirect} from 'react-router';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
-import * as flightActions from '../../actions/flightActions';
-import flights from '../../reducers/flightReducer';
-
+import * as flightActions from '../../redux/flights/flightActions';
+import {IFlight} from '../../../data';
 
 
 interface IProps {
     flightActions? : any;
-    flights? : any;
+    flights? : Array<IFlight>;
 }
 
 export interface IState {
@@ -29,7 +27,6 @@ export interface IState {
 }
 
 class MainPage extends React.Component<IProps, IState> {
-
 constructor(props: IProps) {
     super(props);
 
@@ -51,18 +48,18 @@ public componentWillMount(): void {
     this.props.flightActions.setFlights(this.state);
 }
 
-public handlePaginationChange(event: any, object: any) {
+public handlePaginationChange(event, object) {
     this.setState({ activePage: Math.ceil(object.activePage) });
 }
 
-public handleCheck(event: any, checkbox: any): void {
+public handleCheck(event, checkbox): void {
     const newState: IState = {};
     newState[checkbox.value] = checkbox.checked;
     this.setState({...newState, activePage: 1});
     this.props.flightActions.setFlights({...this.state, ...newState});
 }
 
-public search(event: any, object: any): void {
+public search(event, object): void {
     this.setState({search: object.value, activePage: 1});
     this.props.flightActions.setFlights({...this.state, search: object.value});
 }
@@ -73,7 +70,7 @@ public render(): JSX.Element {
     const headers: Array<string> = ['Время вылета', 'Город', 'Номер рейса', 'Время прибытия', 'Статус', 'Задерживается'];
 
     return (
-        <div>
+        <React.Fragment>
             <div className="header">
                 <Header className="header__info" size='huge' color='black'>Расписание рейсов</Header>
             </div>
@@ -107,20 +104,20 @@ public render(): JSX.Element {
                     /> : ''
                 }
             </div>
-        </div>
+        </React.Fragment>
     );
 }
 }
 
 const mapStateToProps: any = (state: any) => {
     return {
-        flights: state.flights,
+        flights: state.flights
     };
 };
 
 const mapDispatchToProps: any = (dispatch: any) => {
     return {
-        flightActions: bindActionCreators(flightActions, dispatch),
+        flightActions: bindActionCreators(flightActions, dispatch)
     };
 };
 

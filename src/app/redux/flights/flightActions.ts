@@ -1,9 +1,9 @@
-import {SET_FLIGHTS} from '../constants/ReducersConstants';
-import {data} from '../../data';
-import {IState} from '../containers/MainPage/MainPage';
+import {SET_FLIGHTS} from '../ReducersConstants';
+import {data, IFlight} from '../../../data';
+import {IState} from '../../containers/MainPage/MainPage';
 
-export function setFlights(filters: IState, flights: any = data): any {
-    let checkedSearch: Array<any> = flights;
+export function setFlights(filters: IState, flights: Array<IFlight> = data) {
+    let checkedSearch: Array<IFlight> = flights;
 
     if (filters.search) {
         checkedSearch = flights.filter((item) => {

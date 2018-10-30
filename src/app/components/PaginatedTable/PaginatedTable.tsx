@@ -1,25 +1,21 @@
 import * as React from 'react';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+
+import {IFlight} from '../../../data';
 
 import './PaginatedTable.scss';
 
-import { Header, Button, Container, Table, Pagination, Grid, Checkbox, Input } from 'semantic-ui-react';
+import { Table, Pagination } from 'semantic-ui-react';
 
 
 interface IProps {
     onPaginate?: any,
-    flights?: any,
+    flights?: Array<IFlight>,
     totalPages?: any,
     activePage?: any,
     headers?: any
 };
 
-class PaginatedTable extends React.Component<IProps, any> {
-    constructor(props: any) {
-        super(props);
-    }
-
+export default class PaginatedTable extends React.Component<IProps, any> {
     render() {
         const {onPaginate, flights, totalPages, headers, activePage} = this.props;
 
@@ -37,20 +33,20 @@ class PaginatedTable extends React.Component<IProps, any> {
                     </Table.Header>
 
                     <Table.Body>
-                        {flights.length ? flights.map((item, key) => {
+                        {flights.length ? flights.map((item: IFlight, key: number) => {
                             if (key >= (activePage - 1) * totalPages && key <= activePage * totalPages - 1) {
-                                return(
-                                    <Table.Row negative={item.delay} positive={!item.delay} key={key}>
-                                        <Table.Cell>{item.time}</Table.Cell>
-                                        <Table.Cell>{item.destination}</Table.Cell>
-                                        <Table.Cell>{item.number}</Table.Cell>
-                                        <Table.Cell>{item.arrival_time}</Table.Cell>
-                                        <Table.Cell>{item.status ? 'arrival' : 'departure'}</Table.Cell>
-                                        <Table.Cell>{item.delay ? 'Да' : 'Нет'}</Table.Cell>
-                                    </Table.Row>
+                                return(<Table.Row negative={item.delay} positive={!item.delay} key={key}>
+                                            <Table.Cell>{item.time}</Table.Cell>
+                                            <Table.Cell>{item.destination}</Table.Cell>
+                                            <Table.Cell>{item.number}</Table.Cell>
+                                            <Table.Cell>{item.arrivalTime}</Table.Cell>
+                                            <Table.Cell>{item.status ? 'Прилет' : 'Вылет'}</Table.Cell>
+                                            <Table.Cell>{item.delay ? 'Да' : 'Нет'}</Table.Cell>
+                                        </Table.Row>
                                 );
                             }
-                        }) : ''}
+                        }) 
+                        : ''}
                     </Table.Body>
                 </Table>
                 <Pagination 
@@ -67,13 +63,3 @@ class PaginatedTable extends React.Component<IProps, any> {
         );
     }
 }
-
-const mapStateToProps = (state) => {
-    return {};
-};
-
-const mapDispatchToProps = (dispatch) => {
-    return {};
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PaginatedTable);

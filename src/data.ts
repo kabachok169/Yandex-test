@@ -1,94 +1,115 @@
-export const data = [
+export interface IFlight {
+    time: string,
+    destination: string,
+    number: string,
+    arrivalTime: string,
+    status: boolean,
+    delay: boolean
+}
+
+export const data: Array<IFlight> = [
     {
         "number" : "1",
-        "destination" : "London",
+        "destination" : "Лондон",
         "time" : "17:00",
-        "arrival_time" : "21:00",
+        "arrivalTime" : "21:00",
         "status" : true,
         "delay" : false,
-        "company" : "S7"
     },
     {
-        "number" : "2",
-        "destination" : "London",
+        "number" : "1",
+        "destination" : "Лондон",
         "time" : "17:00",
-        "arrival_time" : "21:00",
+        "arrivalTime" : "21:00",
+        "status" : true,
+        "delay" : false,
+    },
+    {
+        "number" : "1",
+        "destination" : "Лондон",
+        "time" : "17:00",
+        "arrivalTime" : "21:00",
+        "status" : true,
+        "delay" : false,
+    },
+    {
+        "number" : "1",
+        "destination" : "Лондон",
+        "time" : "17:00",
+        "arrivalTime" : "21:00",
+        "status" : true,
+        "delay" : false,
+    },
+    {
+        "number" : "1",
+        "destination" : "Лондон",
+        "time" : "17:00",
+        "arrivalTime" : "21:00",
+        "status" : true,
+        "delay" : false,
+    },
+    {
+        "number" : "16",
+        "destination" : "Лондон",
+        "time" : "17:00",
+        "arrivalTime" : "21:00",
         "status" : false,
         "delay" : true,
-        "company" : "S7"
-    },{
-        "number" : "3",
-        "destination" : "London",
+    },
+    {
+        "number" : "14",
+        "destination" : "Лондон",
         "time" : "17:00",
-        "arrival_time" : "21:00",
+        "arrivalTime" : "21:00",
+        "status" : true,
+        "delay" : false,
+    },
+    {
+        "number" : "123",
+        "destination" : "Лондон",
+        "time" : "17:00",
+        "arrivalTime" : "21:00",
         "status" : true,
         "delay" : true,
-        "company" : "S7"
-    },{
-        "number" : "4",
-        "destination" : "London",
+    },
+    {
+        "number" : "12",
+        "destination" : "Лондон",
         "time" : "17:00",
-        "arrival_time" : "21:00",
+        "arrivalTime" : "21:00",
         "status" : false,
         "delay" : false,
-        "company" : "S7"
-    },{
-        "number" : "5",
-        "destination" : "London",
-        "time" : "17:00",
-        "arrival_time" : "21:00",
-        "status" : true,
-        "delay" : true,
-        "company" : "S7"
-    },{
-        "number" : "6",
-        "destination" : "London",
-        "time" : "17:00",
-        "arrival_time" : "21:00",
-        "status" : true,
-        "delay" : true,
-        "company" : "S7"
-    },{
-        "number" : "7",
-        "destination" : "London",
-        "time" : "17:00",
-        "arrival_time" : "21:00",
-        "status" : true,
-        "delay" : false,
-        "company" : "S7"
-    },{
-        "number" : "8",
-        "destination" : "London",
-        "time" : "17:00",
-        "arrival_time" : "21:00",
-        "status" : true,
-        "delay" : false,
-        "company" : "S7"
-    },{
-        "number" : "9",
-        "destination" : "London",
-        "time" : "17:00",
-        "arrival_time" : "21:00",
-        "status" : true,
-        "delay" : true,
-        "company" : "S7"
     },
     {
-        "number" : "10",
-        "destination" : "London",
+        "number" : "111",
+        "destination" : "Лондон",
         "time" : "17:00",
-        "arrival_time" : "21:00",
-        "status" : true,
-        "delay" : true,
-        "company" : "S7"
-    },
-    {
-        "number" : "11",
-        "destination" : "London",
-        "time" : "17:00",
-        "arrival_time" : "21:00",
+        "arrivalTime" : "21:00",
         "status" : true,
         "delay" : false,
-        "company" : "S7"
-    }
+    },
+    {
+        "number" : "121",
+        "destination" : "Лондон",
+        "time" : "17:00",
+        "arrivalTime" : "21:00",
+        "status" : true,
+        "delay" : false,
+    },
+    {
+        "number" : "131",
+        "destination" : "Лондон",
+        "time" : "17:00",
+        "arrivalTime" : "21:00",
+        "status" : true,
+        "delay" : false,
+    },
+    {
+        "number" : "141",
+        "destination" : "Лондон",
+        "time" : "17:00",
+        "arrivalTime" : "21:00",
+        "status" : true,
+        "delay" : true,
+    }    
 ];
